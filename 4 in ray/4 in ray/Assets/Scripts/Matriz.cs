@@ -2,26 +2,35 @@
 
 public class Matriz : MonoBehaviour
 {
+    // variables de tipo entero: estas guardan los valores de ancho y alto de la matriz
     public int width;
     public int height;
 
+    // variables de tipo game object: una representa el objeto actual o nuevo que se crea en la matriz y luego se reemplaza por el siguiente  
+    // y la otra el flujo de pantalla
     public GameObject puzzlePiece;
+    GameObject goAct;
+    // variable que guarda cada objeto de la matriz en su posicion respectiva
     private GameObject[,] grid;
+   
+    // variables de tipo material que dan texturas y color a los ojetos
     public Material Lost;
     public Material Hitler;
-    GameObject goAct;
-
+    
+    // variables de tipo boleano: la primera mantiene el juego activo mientras esté en true
+    // la segunda alterna los turnos
     bool game = true;
     public bool player = true;
 
+    // variables de típo color que asignan un color a un objeto en la situacion corespondiente
     public Color goColor;
     public Color colorPlayer1;
     public Color colorPlayer2;
 
+    // en el start se ejecuta el codigo que crea la matriz con los parametros que el usuario asigne en el inspector
+    // tambien al momento de crear los objetos de la matriz les asigna un color establecido
     void Start()
     {
-
-
         grid = new GameObject[width, height];
         for (int x = 0; x < width; x++)
         {
@@ -38,6 +47,8 @@ public class Matriz : MonoBehaviour
         }
     }
 
+    // en el update se ejecuta el codigo que hace que mientras el bool game esté positivo se lea la posicion del mouse
+    // y se instancie la funcion que veremos acontinuacion
     void Update()
     {
         if (game == true)
@@ -47,6 +58,8 @@ public class Matriz : MonoBehaviour
         }
     }
 
+    // en esta funcion, se lee el click y se alternan los turnos y los colores de los jugadores mediante el bool player
+    // tambien se instancian las variables de comprobación pr cada dirección
     void Juego(Vector3 position)
     {
         int x = (int)(position.x + 0.5f);
@@ -77,6 +90,9 @@ public class Matriz : MonoBehaviour
         }
     }
 
+    // funcion que accede a los parametros de la matriz y a los componentes de color de cada objeto 
+    // y pregunta si hay 4 objetos del mismo color en el eje Y para igualar la variable bool a false y bloquear el juego
+    // también crea un Quad que tapa la matriz
     void VerificarY(int x, int y, Color chekcolor)
     {
         int cont = 0;
@@ -99,8 +115,6 @@ public class Matriz : MonoBehaviour
 
                     goAct.GetComponent<Renderer>().material = Hitler;
 
-
-
                     game = false;
                 }
             }
@@ -109,6 +123,9 @@ public class Matriz : MonoBehaviour
         }
     }
 
+    // funcion que accede a los parametros de la matriz y a los componentes de color de cada objeto 
+    // y pregunta si hay 4 objetos del mismo color en el eje X para igualar la variable bool a false y bloquear el juego
+    // también crea un Quad que tapa la matriz
     void VerificarX(int x, int y, Color chekcolor)
     {
         int cont = 0;
@@ -140,6 +157,10 @@ public class Matriz : MonoBehaviour
         }
     }
 
+    // funcion que recorre la matriz completa (por ambos ejes) y añade el primer objeto que encuentre pintado a un contador
+    // y resta una posición al eje Y y suma uno al eje X a partir de la posición del objeto añadido y si el objeto que esta en la nueva posición
+    // esta pintado lo añade y así sucesivamente hasta que hayan 4 objetos en el contador o el que siga no sea del mismo color que los añadidos e iguale el contador a 0 para futuras comprobaciones
+    // (tambien iguala el bool game a false si se cumple la condición de contador = 4)
     void VerificarXY(int x, int y, Color chekcolor)
     {
         int cont = 0;
@@ -173,6 +194,10 @@ public class Matriz : MonoBehaviour
         }
     }
 
+    // funcion que recorre la matriz completa (por ambos ejes) y añade el primer objeto que encuentre pintado a un contador
+    // y resta una posición al eje X y suma uno al eje Y a partir de la posición del objeto añadido y si el objeto que esta en la nueva posición
+    // esta pintado lo añade y así sucesivamente hasta que hayan 4 objetos en el contador o el que siga no sea del mismo color que los añadidos e iguale el contador a 0 para futuras comprobaciones
+    // (tambien iguala el bool game a false si se cumple la condición de contador = 4)
     void VerificarYX(int x, int y, Color chekcolor)
     {
         int cont = 0;
