@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Matriz : MonoBehaviour
 {
@@ -7,9 +10,8 @@ public class Matriz : MonoBehaviour
 
     public GameObject puzzlePiece;
     private GameObject[,] grid;
-    public Material Lost;
-    public Material Hitler;
-    GameObject goAct;
+    public GameObject gameOverPanel;
+    public GameObject FirstPanel;
 
     bool game = true;
     public bool player = true;
@@ -20,8 +22,6 @@ public class Matriz : MonoBehaviour
 
     void Start()
     {
-
-
         grid = new GameObject[width, height];
         for (int x = 0; x < width; x++)
         {
@@ -40,6 +40,19 @@ public class Matriz : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            FirstPanel.SetActive(false);
+        } 
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (game == false)
+            {
+                SceneManager.LoadScene("Scene");
+            }
+        }
+
         if (game == true)
         {
             Vector3 mPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -93,14 +106,7 @@ public class Matriz : MonoBehaviour
                 cont++;
                 if (cont == 4)
                 {
-                    goAct = GameObject.CreatePrimitive(PrimitiveType.Quad);
-                    goAct.transform.localScale = new Vector3(30.7528f, 19.62602f, 1.0f);
-                    goAct.transform.position = new Vector3(6.54f, 4.62f, -2);
-
-                    goAct.GetComponent<Renderer>().material = Hitler;
-
-
-
+                    gameOverPanel.SetActive(true);
                     game = false;
                 }
             }
@@ -123,15 +129,9 @@ public class Matriz : MonoBehaviour
             if (sphere.GetComponent<Renderer>().material.color == chekcolor)
             {
                 cont++;
-                Debug.Log(cont);
                 if (cont == 4)
                 {
-                    goAct = GameObject.CreatePrimitive(PrimitiveType.Quad);
-                    goAct.transform.localScale = new Vector3(30.7528f, 19.62602f, 1.0f);
-                    goAct.transform.position = new Vector3(6.54f, 4.62f, -2);
-
-                    goAct.GetComponent<Renderer>().material = Hitler;
-
+                    gameOverPanel.SetActive(true);
                     game = false;
                 }
             }
@@ -154,15 +154,9 @@ public class Matriz : MonoBehaviour
                 if (sphere.GetComponent<Renderer>().material.color == chekcolor)
                 {
                     cont++;
-                    Debug.Log(cont);
                     if (cont == 4)
                     {
-                        goAct = GameObject.CreatePrimitive(PrimitiveType.Quad);
-                        goAct.transform.localScale = new Vector3(23.329f, 19.551f, 1.0f);
-                        goAct.transform.position = new Vector3(5.43f, 4.65f, -2);
-
-                        goAct.GetComponent<Renderer>().material = Lost;
-
+                        gameOverPanel.SetActive(true);
                         game = false;
                     }
                 }
@@ -188,15 +182,9 @@ public class Matriz : MonoBehaviour
                 if (sphere.GetComponent<Renderer>().material.color == chekcolor)
                 {
                     cont++;
-                    Debug.Log(cont);
                     if (cont == 4)
                     {
-                        goAct = GameObject.CreatePrimitive(PrimitiveType.Quad);
-                        goAct.transform.localScale = new Vector3(23.329f, 19.551f, 1.0f);
-                        goAct.transform.position = new Vector3(5.43f, 4.65f, -2);
-
-                        goAct.GetComponent<Renderer>().material = Lost;
-
+                        gameOverPanel.SetActive(true);
                         game = false;
                     }
                 }
